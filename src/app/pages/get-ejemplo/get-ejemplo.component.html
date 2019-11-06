@@ -1,0 +1,42 @@
+<div *ngIf="hasLoaded">
+  <!--
+    El contenido de esta capa solo se actualizará cuando el valor de hasLoaded 
+    (variable definida en el archivo ts) sea true. Así evitaremos errores (intentar
+    acceder a los datos cuando la petición todavía no está lista).
+    Una vez que ha cargado, podemos acceder a esos datos llamandolos con corchetes
+    dobles. Como user es un JSON, podemos acceder a cada una de sus claves (en nuestro
+    ejemplo, username y password. Muy seguro todo.)
+  -->
+  <h3> Ejemplo de un get a un usuario </h3><hr>
+  <div class="card" style="width: 100%">
+    <div class="card-body">
+      <p class="text-center">El usuario es {{user.username}}</p>
+      <p class="font-italic text-center text-muted">Su contraseña es "{{user.password}}"...</p>
+    </div>
+  </div>
+  <hr><h3> Ejemplo de un get a un usuario en concreto </h3><hr>
+
+  <!--
+    Definimos un "template" de tipo ngForm y lo llamamos formulario. Los templates son como variables.
+    Para hacer esto, hay que meter los Forms de Angular en el modulo de la aplicación.
+    El evento ngSubmit se dispara cuando el formulario se envía (cuando se pulsa el botón). Cuando eso ocurre,
+    invoca a la función enviar del archivo TS, con el parámetro formulario (la template anterior) y el atributo
+    form (ya que la template tiene a parte más mierdas que no nos interesan.)
+  -->
+  <form #formulario="ngForm" (ngSubmit)="enviar(formulario.form)">
+    <div class="input-group mb-3">
+      <!--
+        En el input de abajo, ponemos ngModel para especificar que ese campo pertenece
+        al formulario actual. Además, required porque es obligatorio.
+      -->
+      <input name="username" type="text" class="form-control" placeholder="Usuario" ngModel required >
+      <div class="input-group-prepend">
+        <!-- 
+          Con type="submit" hacemos que el botón envíe el evento (ngSubmit), que a su vez enviará
+          la llamada a la función enviar
+        -->
+        <button class="btn btn-outline-secondary" type="submit" id="button-addon1">Buscar</button>
+      </div>
+    </div>
+  </form>
+</div>
