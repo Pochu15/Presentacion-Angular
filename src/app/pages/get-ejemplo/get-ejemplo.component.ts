@@ -14,17 +14,12 @@ export class GetEjemploComponent implements OnInit {
 
   user: User;
   user2: User;
-  hasLoaded = false;
+  users: User[];
 
   ngOnInit() {
     this.api.getUser('Carlos').subscribe((data: User) => {
       console.log(data);
       this.user = data;
-      this.hasLoaded = true;
-      /**
-       * Ahora que this.user está inicializado, podemos mostrarlo en el HTML.
-       * Además, actualizamos el valor de hasLoaded para que la página cargue.
-       */
     });
   }
 
@@ -36,6 +31,14 @@ export class GetEjemploComponent implements OnInit {
       if (error.status === 404) {
         alert('Usuario no encontrado');
       }
+      this.user2 = undefined;
+    });
+  }
+
+  getUsers() {
+    this.api.getUsers().subscribe((data: User[]) => {
+      console.log(data);
+      this.users = data;
     });
   }
 

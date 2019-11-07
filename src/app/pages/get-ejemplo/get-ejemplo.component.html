@@ -1,4 +1,4 @@
-<div *ngIf="hasLoaded">
+<div *ngIf="user">
   <!--
     El contenido de esta capa solo se actualizará cuando el valor de hasLoaded 
     (variable definida en el archivo ts) sea true. Así evitaremos errores (intentar
@@ -7,14 +7,20 @@
     dobles. Como user es un JSON, podemos acceder a cada una de sus claves (en nuestro
     ejemplo, username y password. Muy seguro todo.)
   -->
-  <h3> Ejemplo de un get a un usuario </h3><hr>
+  <h3> 1. Get del usuario '{{user.username}}'</h3>
+  <p class="text-muted"> Peticiones http simples. Mostrar variables de TS en HTML</p>
+  <hr>
   <div class="card" style="width: 100%">
     <div class="card-body">
       <p class="text-center">El usuario es {{user.username}}</p>
       <p class="font-italic text-center text-muted">Su contraseña es "{{user.password}}"...</p>
     </div>
   </div>
-  <hr><h3> Ejemplo de un get a un usuario en concreto </h3><hr>
+
+
+  <hr><h3> 2. Get a un usuario en concreto </h3>
+  <p class="text-muted"> Formulario para recoger datos del usuario. 
+    Manejo de errores de una petición. Utilización de la clausula *ngIf</p><hr>
 
   <!--
     Definimos un "template" de tipo ngForm y lo llamamos formulario. Los templates son como variables.
@@ -29,14 +35,41 @@
         En el input de abajo, ponemos ngModel para especificar que ese campo pertenece
         al formulario actual. Además, required porque es obligatorio.
       -->
-      <input name="username" type="text" class="form-control" placeholder="Usuario" ngModel required >
+      <input name="username" type="text" class="form-control" placeholder="Usuario" ngModel required>
       <div class="input-group-prepend">
         <!-- 
           Con type="submit" hacemos que el botón envíe el evento (ngSubmit), que a su vez enviará
           la llamada a la función enviar
         -->
-        <button class="btn btn-outline-secondary" type="submit" id="button-addon1">Buscar</button>
+        <button [disabled]="!formulario.valid" class="btn btn-outline-secondary" type="submit" id="button-addon1">Buscar</button>
       </div>
     </div>
   </form>
+  <!--
+    Se podría hacer un template para no repetir el código anterior.
+    *ngIf solo cargará la capa si se cumple la condición, es decir, si se ha encontrado
+    un usuario.
+  -->
+  <div *ngIf="user2" class="card" style="width: 100%">
+    <div class="card-body">
+      <p class="text-center">El usuario es {{user2.username}}</p>
+      <p class="font-italic text-center text-muted">Su contraseña es "{{user.password}}"...</p>
+    </div>
+  </div>
+
+
+  <hr><h3> 3. Get de todos los usuarios. </h3>
+  <p class="text-muted"> Manejo de *ngFor para iterar sobre arrays. </p>
+
+  <button class="btn btn-outline-dark btn-block" (click)="getUsers()">Cargar todos los usuarios</button>
+
+  <div *ngFor="let user of users; index as i"><br>
+    <div class="card" style="width: 100%">
+      <div class="card-body">
+        <p class="text-center">El usuario número {{i+1}} es {{user.username}}</p>
+        <p class="font-italic text-center text-muted">Su contraseña es "{{user.password}}"...</p>
+      </div>
+    </div>
+  </div>
+
 </div>

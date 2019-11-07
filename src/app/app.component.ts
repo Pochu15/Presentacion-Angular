@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   title = 'Presentacion Angular - Ejemplos.';
 
   // Estas variables se utilizan para estilizar los botones. Son opcionales
+
   ejemplo1 = false;
   ejemplo2 = false;
 
@@ -39,5 +40,11 @@ export class AppComponent implements OnInit {
     this.router.navigateByUrl('/get');
     this.ejemplo1 = true;
     this.ejemplo2 = false;
+  }
+
+  toPost() {
+    this.router.navigateByUrl('/post');
+    this.ejemplo1 = false;
+    this.ejemplo2 = true;
   }
 }
